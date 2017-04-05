@@ -1,0 +1,28 @@
+language: bash
+services: docker
+
+env:
+  - GLIDE=v0.12.3 VERSION=1.8 VARIANT=  ALIAS=latest
+  - GLIDE=v0.12.3 VERSION=1.8 VARIANT=wheezy
+  - GLIDE=v0.12.3 VERSION=1.8 VARIANT=alpine
+  - GLIDE=v0.12.3 VERSION=1.7 VARIANT=
+  - GLIDE=v0.12.3 VERSION=1.7 VARIANT=wheezy
+  - GLIDE=v0.12.3 VERSION=1.7 VARIANT=alpine
+  - GLIDE=v0.12.3 VERSION=1.7 VARIANT=alpine3.5
+
+before_script:
+  - env | sort
+  - cd "$VERSION"
+  - prefix="harborfront/go-glide"
+  - image="$prefix:${VERSION:+$VERSION}${GLIDE:+-$GLIDE}${VARIANT:+-$VARIANT}"
+
+script:
+  - travis_retry docker build --build-arg="TAG=${GLIDE:+$GLIDE}" -t "$image" "${VARIANT:-.}"
+
+after_script:
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push "$image"
+  - if [ "$ALIASES" -ne "" ]; then
+    docker tag $(docker images | awk '$1 == "${image}" {print $3}') "$prefix":"$ALIAS"
+    docker push "$prefix":"$ALIAS"
+    fi

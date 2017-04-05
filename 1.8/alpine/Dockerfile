@@ -1,0 +1,10 @@
+FROM golang:1.8-alpine
+
+ARG TAG
+
+COPY glide-install.sh /tmp/glide-install.sh
+RUN apk update && apk add ca-certificates openssl && update-ca-certificates \
+    && chmod +x /tmp/glide-install.sh \
+    && sleep 1 \
+    && /tmp/glide-install.sh \
+    && rm -rf /tmp/glide-install.sh
