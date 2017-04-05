@@ -24,7 +24,7 @@ script:
   - if [ "$ALIASES" != "" ]; then
       IN=(${ALIASES//,/ });
       for i in "${IN[@]}"; do
-        docker tag "${image}" "${PREFIX}:$i";
-        docker push "${PREFIX}:$i";
+        docker tag "${image}" "$prefix:$i";
+        docker push "$prefix:$i";
       done;
     fi
