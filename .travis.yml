@@ -16,4 +16,4 @@ before_script:
   - prefix="harborfront/go-glide"
   - image="$prefix:${VERSION:+$VERSION}${GLIDE:+-$GLIDE}${VARIANT:+-$VARIANT}"
 
-script: ./build/aliases.sh
+script: ../build/aliases.sh
