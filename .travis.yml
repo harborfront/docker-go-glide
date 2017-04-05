@@ -2,10 +2,10 @@ language: bash
 services: docker
 
 env:
-  - GLIDE=v0.12.3 VERSION=1.8 VARIANT=  ALIASES=latest
+  - GLIDE=v0.12.3 VERSION=1.8 VARIANT=  ALIASES=("latest" 1.8)
   - GLIDE=v0.12.3 VERSION=1.8 VARIANT=wheezy
   - GLIDE=v0.12.3 VERSION=1.8 VARIANT=alpine
-  - GLIDE=v0.12.3 VERSION=1.7 VARIANT=
+  - GLIDE=v0.12.3 VERSION=1.7 VARIANT= ALIASES=1.7
   - GLIDE=v0.12.3 VERSION=1.7 VARIANT=wheezy
   - GLIDE=v0.12.3 VERSION=1.7 VARIANT=alpine
   - GLIDE=v0.12.3 VERSION=1.7 VARIANT=alpine3.5
@@ -22,7 +22,9 @@ script:
 after_script:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push "$image"
-  - if [ "$ALIASES" -ne "" ]; then
-    docker tag $(docker images | awk '$1 == "${image}" {print $3}') "$prefix":"$ALIASES"
-    docker push "$prefix":"$ALIASES"
+  - if [ "$ALIASES" != "" ]; then
+    for i in "${ALIASES[@]}"; do
+      docker tag $(docker images | awk '$1 == "${image}" {print $3}') "$prefix":"$ALIASES"
+      docker push "$prefix":"$ALIASES"
+    done
     fi
