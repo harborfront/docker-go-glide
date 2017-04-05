@@ -1,5 +1,4 @@
 # Go-Glide: Docker Image for Go &amp; Glide
----
 ![Travis CI](https://travis-ci.org/harborfront/docker-go-glider.svg?branch=master)
 
 ## Supported Tags
