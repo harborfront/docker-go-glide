@@ -20,10 +20,11 @@ script:
   - travis_retry docker build --build-arg="TAG=${GLIDE:+$GLIDE}" -t "$image" "${VARIANT:-.}"
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push "$image"
+  - docker images
   - if [ "$ALIASES" != "" ]; then
       IN=(${ALIASES//,/ });
       for i in "${IN[@]}"; do
-        docker tag $(docker images | awk '$1 == "${image}" {print $3}') "$prefix":"$i";
-        docker push "$prefix":"$i";
+        docker tag "${image}" "${PREFIX}:$i";
+        docker push "${PREFIX}:$i";
       done;
     fi
