@@ -7,3 +7,5 @@ RUN chmod +x /tmp/glide-install.sh \
     && sleep 1 \
     && /tmp/glide-install.sh \
     && rm -rf /tmp/glide-install.sh
+WORKDIR /go/src/app
+ENV GLIDE_HOME /go/src/app
