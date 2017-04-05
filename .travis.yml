@@ -19,12 +19,4 @@ before_script:
 script:
   - travis_retry docker build --build-arg="TAG=${GLIDE:+$GLIDE}" -t "$image" "${VARIANT:-.}"
 
-after_script:
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push "$image"
-  - if [ "$ALIASES" != "" ]; then
-    for i in "${ALIASES[@]}"; do
-      docker tag $(docker images | awk '$1 == "${image}" {print $3}') "$prefix":"$ALIASES"
-      docker push "$prefix":"$ALIASES"
-    done
-    fi
+after_script: ./build/aliases.sh
