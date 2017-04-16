@@ -1,5 +1,5 @@
 # Go-Glide: Docker Image for Go &amp; Glide
-[![Travis CI](https://travis-ci.org/harborfront/docker-go-glider.svg?branch=master)](https://travis-ci.org/harborfront/docker-go-glider?branch=master)
+[![Travis CI](https://travis-ci.org/harborfront/docker-go-glide.svg?branch=master)](https://travis-ci.org/harborfront/docker-go-glider?branch=master)
 
 ## Supported Tags
 Each version number comprises of the golang version, glide version and (if applicable) wheezy, alpine et al.

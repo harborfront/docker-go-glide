@@ -9,5 +9,5 @@ RUN apk update && apk add ca-certificates openssl && update-ca-certificates \
     && /tmp/glide-install.sh \
     && rm -rf /tmp/glide-install.sh
 
-    WORKDIR /go/src/app
-    ENV GLIDE_HOME /go/src/app
+WORKDIR /go/src/app
+ENV GLIDE_HOME /go/src/app
