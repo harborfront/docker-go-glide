@@ -2,6 +2,10 @@ FROM golang:1.8-alpine
 
 ARG TAG
 
+ENV TINI_VERSION v0.14.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+
 COPY glide-install.sh /tmp/glide-install.sh
 RUN apk update && apk add ca-certificates openssl && update-ca-certificates \
     && chmod +x /tmp/glide-install.sh \
@@ -11,3 +15,6 @@ RUN apk update && apk add ca-certificates openssl && update-ca-certificates \
 
 WORKDIR /go/src/app
 ENV GLIDE_HOME /go/src/app
+
+ENTRYPOINT ["/tini", "--"]
+CMD ["glide"]
