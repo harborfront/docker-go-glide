@@ -10,7 +10,8 @@ COPY glide-install.sh /tmp/glide-install.sh
 RUN chmod +x /tmp/glide-install.sh \
     && sleep 1 \
     && /tmp/glide-install.sh \
-    && rm -rf /tmp/glide-install.sh
+    && rm -rf /tmp/glide-install.sh \
+    && mv /go/bin/glide /bin/glide
 
 
 WORKDIR /go/src/app
