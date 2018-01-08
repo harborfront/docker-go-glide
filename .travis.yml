@@ -18,7 +18,7 @@ before_script:
 
 script:
   - travis_retry docker build --build-arg="TAG=${GLIDE:+$GLIDE}" -t "$image" "${VARIANT:-.}"
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push "$image"
   - docker images
   - if [ "$ALIASES" != "" ]; then
